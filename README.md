@@ -260,4 +260,37 @@ w = width( ghs )
 median(w)
 "20115.5"
 
+QUESTION 2.7.1  
+## first order them
+erbs3 = erbs[order(erbs),]
+##confirm same chr
+all( seqnames(erbs2)==seqnames(erbs3) )
+mean( start(erbs2)==start(erbs3) & end(erbs2)==end(erbs3) )
+##the intersection should be smaller
+all( width(erbs2) <= width(erbs3) )
+"Over 90% of these regions in these two objects are the same with the different regions being smaller in erbs2."
+
+QUESTION 2.7.2
+tssgr= resize(ghs,1)
+start(tssgr["100113402"])
+"70563402"
+
+QUESTION 2.7.3
+library(Homo.sapiens)
+ghs = genes(Homo.sapiens)
+tssgr= resize(ghs,1)
+i = nearest(erbs[4],tssgr)
+mcols(tssgr)$GENEID[i]
+"2101"
+
+QUESTION 2.7.4
+library(Homo.sapiens)
+ghs = genes(Homo.sapiens)
+tssgr= resize(ghs,1)
+i = nearest(erbs[4],tssgr)
+gene = as.character(mcols(tssgr)$GENEID[i])
+
+select(Homo.sapiens,key=gene,column="SYMBOL",keytype="GENEID")
+"ESRRA"
+
 
