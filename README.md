@@ -293,4 +293,23 @@ gene = as.character(mcols(tssgr)$GENEID[i])
 select(Homo.sapiens,key=gene,column="SYMBOL",keytype="GENEID")
 "ESRRA"
 
+QUESTION 2.8.1
+genome(erbs)
+"hg19"
+
+QUESTION 2.8.2
+seqs = getSeq(Hsapiens,erbs)
+gc = alphabetFrequency(seqs)[,2:3]
+n = width(erbs)
+gccontent = rowSums(gc)/n
+"0.652568"
+
+QUESTION 2.8.3
+control = shift(erbs,10000)
+controlseqs = getSeq(Hsapiens,control)
+gc = alphabetFrequency(controlseqs)[,2:3]
+n = width(control)
+controlgccontent = rowSums(gc)/n
+median(controlgccontent)
+"0.4860174"
 
