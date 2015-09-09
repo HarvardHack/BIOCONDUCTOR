@@ -189,6 +189,55 @@ From the man page: resize resizes the ranges to the specified width where either
 
 "It gives you just the starting point of each range. It gives you just the starting point of each range."
 
+QUESTION 2.4.1  
+par(mfrow=c(2,1))
+plotGRanges(x)
+plotGRanges(resize(x,1))
+"at the left-most point of the "+" strand ranges in x, and the right-most point of the "-" strand ranges in x"
+
+QUESTION 2.4.2
+disjoined = disjoin(c(x,y))
+in.both = disjoined %over% x & disjoined %over% y
+sum(width(disjoined[ in.both ]))
+"140"
+
+QUESTION 2.4.3
+disjoined = disjoin(c(x,y))
+not.in.both = !(disjoined %over% x & disjoined %over% y)
+sum(width(disjoined[ not.in.both ]))
+"130"
+
+QUESTION 2.4.4
+z = GRanges("chr1", range(ranges(x)), strand="-")
+sum(x %over% z)
+"0"
+
+QUESTION 2.5.1  
+start(HepG2)[17]
+"46528596"
+
+QUESTION 2.5.2
+start(HepG2[17])
+"46528596"
+
+QUESTION 2.5.3
+d = distanceToNearest(HepG2[17],GM12878)
+i = subjectHits(d)
+start(GM12878[i])
+"46524762"
+
+QUESTION 2.5.4
+d = distanceToNearest(HepG2[17],GM12878)
+mcols(d)$distance
+"2284"
+
+QUESTION 2.5.5
+d = distanceToNearest(HepG2,GM12878)
+mean( mcols(d)$distance < 2000)
+"0.2673267"
+
+
+
 
 
 
