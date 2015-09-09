@@ -111,6 +111,7 @@ cor(samp$score, exprs(samp)["31489_at",])
 "0.1376892"
 
 
+##WEEK 2
 
 
 
