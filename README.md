@@ -114,5 +114,81 @@ cor(samp$score, exprs(samp)["31489_at",])
 ##WEEK 2
 
 
+QUESTION 2.1.1
+biocVersion()
+"3.0"
+
+QUESTION 2.1.2
+library(ERBS)
+data(HepG2)
+class(HepG2)
+"GRanges"
+
+class(HepG2)
+##More specifically you can see it here:
+attributes(class(HepG2))
+help("GRanges-class")
+"GenomicRanges"
+
+QUESTION 2.1.3
+##You can see it by just typing and reading the provided information
+HepG2
+## or you can type
+length(HepG2)
+"303"
+
+QUESTION 2.2.1
+library(ERBS)
+data(HepG2)
+median( mcols(HepG2)$signalValue )
+"7.024"
+
+QUESTION 2.2.2
+i=which.max(  mcols(HepG2)$signalValue  )
+seqnames(HepG2[i])
+"chrX"
+
+QUESTION 2.2.3
+chr = seqnames(HepG2)
+table(chr)[16]
+"31"
+
+QUESTION 2.2.4
+median( width(HepG2) )
+##You can see the histogram
+hist(width(HepG2),nclass=25)
+"560"
+
+QUESTION 2.3.1
+IRanges(101,200) * 2
+"126"
+
+QUESTION 2.3.2
+narrow(IRanges(101,200), start=20)
+"120"
+
+QUESTION 2.3.3
+IRanges(101,200)+25
+"150"
+
+QUESTION 2.3.4
+sum(width(IRanges(start=c(1,11,21),end=c(3,15,27))))
+"15"
+
+QUESTION 2.3.5
+range(x)
+sum(width(gaps(x)))
+"130"
+
+QUESTION 2.3.6
+length(disjoin(x))
+"17"
+
+QUESTION 2.3.7
+From the man page: resize resizes the ranges to the specified width where either the start, end, or center is used as an anchor. The default is fix="start", so resize(x,1) gives you the starting integer of each range in x.
+
+"It gives you just the starting point of each range. It gives you just the starting point of each range."
+
+
 
 
