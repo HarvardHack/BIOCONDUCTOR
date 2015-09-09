@@ -6,37 +6,37 @@ CHEATSHEET FOR HARVARD PH525.4X
 
 QUESTION 1.1.1
 table(expr.meta$gender)
-110
+"110"
 
 QUESTION 1.1.2
 summary(expr.meta$pkyrs)
-40
+"40"
 
 QUESTION 1.1.3
 qqnorm(expr.meta$pkyrs)
-FALSE
+"FALSE"
 
 QUESTION 1.2.1
 seqs = c("ATG", "TGA", "TAA","TAG")
 n =sapply(seqs, function(x) countPattern(x,chr11seq))
 which.max(n)
-TAA & 2624324
+"TAA & 2624324"
 
 QUESTION 1.2.2
 chr7seq = BSgenome.Hsapiens.UCSC.hg19$chr7
 alphabetFrequency(chr7seq, as.prob=TRUE)
-0.19901933
+"0.19901933"
 
 QUESTION 1.2.3  
 s17$loc[which(s17$RefSNP_id=="73971683")]
 ##or with dplyr
 library(dplyr)
 s17 %>% filter(RefSNP_id=="73971683") %>% select(loc)
-135246
+"135246"
 
 QUESTION 1.3.1
 boxplot(e["209169_at",]~tissue,las=2)
-This gene is expressed in the brain but not the other tissues 
+"This gene is expressed in the brain but not the other tissues"
 
 QUESTION 1.3.2  
 IDs = c("201884_at","209169_at", "206269_at","207437_at","219832_s_at","212827_at")
@@ -62,11 +62,56 @@ Humans are a diploid species, meaning the somatic cells typically contain two co
 
 Q 1.4.3
 Genetic information, such as single nucleotide polymorphisms, have a chance of being transmitted across generations. mRNA transcripts and proteins such as transcription factors degrade over time and, most importantly, do not replicate themselves. In other words, DNA (not proteins or RNA) is known as the main molecule of genetic inheritance. (Side note: There are cases of mRNA and proteins being temporarily inherited, for example the mRNA which are in the egg cell at the moment it is fertilized by the sperm cell.)
-"a SNP (single nucleotide polymorphism) a SNP (single nucleotide polymorphism)"
+"a SNP (single nucleotide polymorphism)"
 
 Q 1.4.4
 The existence or nonexistence of the bud is a low-dimensional characteristic of the organism.
 "phenotypic states phenotypic states"
+
+QUESTION 1.5.1
+length(unique(keys(Homo.sapiens, keytype="ENTREZID")))
+"47721"
+
+QUESTION 1.5.2
+length(unique(keys(Homo.sapiens, keytype="ENSEMBL")))
+"28553"
+
+QUESTION 1.5.3
+select(Homo.sapiens, key="9575", keytype="ENTREZID", columns=c("SYMBOL", "ENSEMBL", "ENTREZID", "CHR"))
+"ENSG00000134852"
+
+QUESTION 1.5.4
+length(unique(tab$ENTREZID))
+"56"
+
+QUESTION 1.6.1
+female = samp[,samp$sex == "Female"]
+sum(exprs(female[1,]))
+"1231.46"
+
+QUESTION 1.6.2
+experimentData(samp)
+"pfermat@lab.not.exist"
+
+QUESTION 1.6.3
+annotation(samp)
+
+library(BiocInstaller)
+biocLite("hgu95av2.db")
+
+library(hgu95av2.db)
+fns = featureNames(samp)
+annot = select(hgu95av2.db, keys=fns, keytype="PROBEID", columns="SYMBOL")
+## this map is not one to one, so pick one:
+geneSymbols = annot [ match(fns, annot$PROBEID), "SYMBOL"]
+"hgu95av2"
+
+QUESTION 1.6.4
+cor(samp$score, exprs(samp)["31489_at",])
+"0.1376892"
+
+
+
 
 
 
