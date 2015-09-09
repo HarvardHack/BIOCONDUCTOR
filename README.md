@@ -236,8 +236,28 @@ d = distanceToNearest(HepG2,GM12878)
 mean( mcols(d)$distance < 2000)
 "0.2673267"
 
+QUESTION 2.6.1
+genome(ghs)
+"hg19"
+length(ghs)
+"23056"
 
+QUESTION 2.6.2
+which.max( table( seqnames( ghs ) ))
+"chr1"
 
+QUESTION 2.6.3
+w = width( ghs )
+hist( w )
+## the larger values are so much larger than the bulk of the data
+## that we can barely see the frequencies of large values in the histogram 
+## the log transformation better shows how fat the right tail is:
+hist( log10(w))
+"A distribution with a very fat right tail A distribution with a very fat right tail"
 
+QUESTION 2.6.4
+w = width( ghs )
+median(w)
+"20115.5"
 
 
