@@ -313,3 +313,40 @@ controlgccontent = rowSums(gc)/n
 median(controlgccontent)
 "0.4860174"
 
+QUESTION 2.9.1
+library(BSgenome)
+grep("Drerio", available.genomes(), value=TRUE) # exclude masked
+"3"
+
+QUESTION 2.9.2
+class(c17m)
+"MaskedDNAString"
+
+QUESTION 2.9.3
+c22m = BSgenome.Hsapiens.UCSC.hg19.masked$chr22
+  round(100*sum(width(masks(c22m)$AGAPS))/length(c22m),0)
+  "31"
+  
+QUESTION 2.10.1
+start(HepG2[1])-start(nHepG2[1])
+"199761"
+
+QUESTION 2.11.1
+The linear structures are transcripts, composed of untranslated regions at the ends, exons (small yellow rectangles), and introns (arrows between exons). The collection of transcripts makes up a "gene model".
+"TRANSCRIPT"
+
+QUESTION 2.11.2
+"count them in the display" "27"
+
+QUESTION 2.11.3
+"27" 
+ 
+Q 2.12.1
+class(targets)
+"data.frame"
+
+Q 2.12.2
+ "it cannot be determined without forensic work it cannot be determined without forensic work"
+
+Q 2.12.3
+ "use a descriptive filename use a descriptive filename"
