@@ -350,3 +350,14 @@ Q 2.12.2
 
 Q 2.12.3
  "use a descriptive filename use a descriptive filename"
+
+Q 2.13.1
+"8"
+
+Q 2.14.1
+resize(g,1)
+"kp is the set of genes whose transcription start site lies in a HepG2 binding site"
+
+Q 2.14.2
+You enter the string in the search box and look at the bottom of the page which tells how many entries are found
+"30"
