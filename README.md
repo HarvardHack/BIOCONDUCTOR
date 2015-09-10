@@ -726,7 +726,36 @@ QUESTION 3.9.2
 Examine the plot.
 "7"  "4"
 
+QUESTION 3.10.1
+summary(width(h2bw))
+4
 
+QUESTION 3.10.2
+sum(duplicated(inpeak))
+## no duplicated indices here, so:
+median(h2bw[ inpeak ]$score)
+"45.7"
+
+QUESTION 3.10.3
+median(h2bw[ -inpeak ]$score)
+"4.2"
+
+QUESTION 3.10.4
+library(Homo.sapiens)
+
+select(Homo.sapiens, keys="ESRRA", keytype="SYMBOL", columns="CHRLOC")
+
+narrind = queryHits(findOverlaps(HepG2, GRanges("chr11", IRanges(64073044, width=1))))
+
+bwind = queryHits(fo)[ subjectHits(fo)==narrind]
+
+max( h2bw$score[ bwind ] )
+"202.1"
+
+QUESTION 3.10.5
+peakcov[ which.max(peakcov$score) ]
+start(HepG2[5]) + HepG2[5]$peak
+"64072320"
  
 
 
