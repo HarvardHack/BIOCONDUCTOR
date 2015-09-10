@@ -475,3 +475,74 @@ for(i in 23:24){
   abline(h=0)
   }
   "265"
+
+ Q 3.4.1
+ datadir = "/your/path/here"
+basedir = paste0(datadir, "/celfiles")
+setwd(basedir)
+tab = read.delim("sampleinfo.txt",check.names=FALSE,as.is=TRUE)
+rownames(tab) = tab$filenames
+tab["1521a99hpp_av06.CEL.gz","36311_at"]
+"4"
+ 
+Q 3.4.2
+fns = list.celfiles()
+fns
+all(fns %in% tab[,1])##check
+ab = ReadAffy(phenoData=tab)
+sum( probeNames(ab)=="36311_at")
+length( featureNames(ab) )
+length( probeNames(ab))
+"16"
+
+Q 3.4.3
+pid = "36085_at"
+##which columns should we use?
+ind = which(pData(ab)[,1]%in%c("1532a99hpp_av04.CEL.gz","1532b99hpp_av04.CEL.gz"))
+
+##extract the correct rows
+mat = pm(ab) [ probeNames(ab)==pid, ind] 
+
+##what are the intended conc
+conc = pData(ab)[ind, pid]
+
+##make the plots
+mypar2(1,1)
+matplot(conc, t(mat), log="y", type="l")
+
+##now comput log fold changesa
+lfc = log2(mat[,2]/mat[,1])
+stripchart(lfc,vertical=TRUE,ylim=c(-0.5,1.5))
+abline(h=log2(conc[2]/conc[1])) #intended log fold
+abline(h=0)
+"There is wide variation across probes representing the same gene but these mostly cancel out and the log-ratios are close to the intended log fold change of 1 (between 0.3 and 1.2)"
+
+Q 3.4.4
+library(genefilter)
+g = factor(pData(ab)[,2])
+e = rma(ab)
+tt = rowttests(exprs(e),g)
+tt["36085_at","p.value"]
+setwd(basedir)
+ejust = justRMA(filenames=tab[,1],phenoData=tab)
+"0.002611949"
+
+Q 3.4.5
+g = factor(pData(e)[,2])
+tt = rowttests(exprs(e),g)
+lfc = -tt$dm
+
+sig = colnames(pData(ab))[-1]
+boxplot( split(lfc, rownames(tt)%in%sig))
+##close up 
+boxplot( split(lfc, rownames(tt)%in%sig),ylim=c(-1,1))
+" With one exception, the spiked-in genes show absolute value for log fold changes of about 0.6, while the rest of the genes are mostly between -0.25 and 0.25 "
+
+Q 3.4.6
+i = which(RG$genes$ID=="H200015482")
+j = which(rownames(RG$targets)=="6Hs.168")
+log2(RG$R[i,j]/RG$G[i,j])
+MA = MA.RG(RG,bc.method="none")
+MA$M[i,j]
+setwd(wd)
+"0.6456647"
