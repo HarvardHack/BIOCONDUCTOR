@@ -639,3 +639,9 @@ legend("topleft",col=unique(batch),legend=unique(batch)+3,pch=1)
 legend("bottomleft",pch=unique(strain),legend=unique(strain))
 "Batch seems to explain more variability that strain. The first PC splits batch 7 from 3 and 4 into two groups. The second PC splits batches 3 and 4 into two groups (with one sample as an exception) Batch seems to explain more variability that strain. The first PC splits batch 7 from 3 and 4 into two groups. The second PC splits batches 3 and 4 into two groups (with one sample as an exception)"
 
+QUESTIONS 3.7
+EXPLANATION
+-The pair of u and v is more likely to have a high correlation than differences or log fold changes across pairings. This is because the differences and log fold changes involve moving the values of the pair closer to zero in which the individual samples had large values. High correlations in microarray data are driven by rows where both of the pair have large values.
+-The raw values reported from a microarray are not directly translatable to due to background noise, sample- and probe-specific effects. In particular, a value of 0 does not correspond to “no expression”, and a value above 0 does not correspond to "expressed".
+-The raw values reported from a microarray are not directly translatable to inference about expression, therefore direct relative comparisons of these raw values across different sets of proves are not meaningful.
+"Poisson with lambda = 1/2"   "u and v"  "Because different probes have different background levels, we cannot say for sure if gene A is expressed or not"  "Because not all probes are as good at detecting real gene expression, we cannot say for sure if gene B has higher expression than gene A" 
