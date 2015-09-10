@@ -714,6 +714,19 @@ boxplot(M[-erccIndex,],range=0,ylim=c(-2,2))
 abline(h=0,lty=2)
  "Quantile normalization has centered the majority of genes. The controls are only a minority so this is the preferred result"
  
+QUESTION 3.9.1
+x = getSeq(Mmusculus, reduced.exons)
+
+dss = DNAStringSet(lapply(x, unlist))
+
+gc = letterFrequency(dss, "GC", as.prob=TRUE)
+"0.4151355"
+
+QUESTION 3.9.2
+Examine the plot.
+"7"  "4"
+
+
  
 
 
