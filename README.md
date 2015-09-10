@@ -50,7 +50,7 @@ QUESTION 1.3.3
 hgu133a.db 
 
 QUESTION 1.3.4
- In an eSet object with the e in the assayData accessible with exprs() and tissue as one of the columns in the phenoData
+"In an eSet object with the e in the assayData accessible with exprs() and tissue as one of the columns in the phenoData"
  
 Q 1.4.1 
 The number of copies of RNA depends on how much the gene is being transcribed. “Housekeeping genes” such as those used to make ribosomal or transfer RNA are transcribed at a high rate, while others, such as mRNA for some transcription factors, are transcribed less frequently. Some genes are not transcribed at all in certain cell types.
@@ -404,7 +404,7 @@ Golub, et al. 1999 (PMID: 10521349) in particular used gene expression microarra
  "ExpressionSet"
  
  Q 3.3.2
- geneExpression will be the assayData, sampleInfo will be the phenoData, and expressionAnnotation will be the featureData 
+"geneExpression will be the assayData, sampleInfo will be the phenoData, and expressionAnnotation will be the featureData" 
  
  Q 3.3.3
  pd = AnnotatedDataFrame(sampleInfo)
@@ -576,7 +576,66 @@ countOverlaps(g2[ "FBgn0039890" ], ga)
 "1085"
 
 QUESTION 3.5B.1
+g.so = summarizeOverlaps(g, bf, ignore.strand=TRUE)
+
+grl.so = summarizeOverlaps(grl, bf, ignore.strand=TRUE)
+
+# this generates a warning about 0 counts
+
+plot(assay(g.so),assay(grl.so),log="xy");abline(0,1)
+
+# adding a pseudocount fixes the log(0) issue
+
+plot(assay(g.so)+1,assay(grl.so)+1,log="xy");abline(0,1)
+
+ratio = assay(grl.so) / assay(g.so)
+
+mean(ratio[assay(g.so) > 0])
+"0.8929273"
 
 QUESTION 3.5B.2
+count = assay(grl.so)
+
+# here, we can just use sum() because there is only one column
+
+# otherwise we would use: sweep(count, 2, colSums(count), "/")
+
+fpm = (count/sum(count)) * 1e6
+
+head(fpm,1)
+"4275.60731"
 
 QUESTION 3.5B.3
+ebp = sum(width(reduce(grl)))
+
+count = assay(grl.so)
+
+fpm = (count/sum(count)) * 1e6
+
+fpkm = (fpm/ebp) * 1e3
+
+head(fpkm)
+"1782.245648"
+
+QUESTION 3.6.1  
+p0s = colMeans( exprs(bottomly.eset) == 0)
+median( p0s )
+"0.687021"
+
+QUESTION 3.6.2
+p0s = colMeans( exprs(bottomly.eset) == 0)
+boxplot(split( p0s , pData(bottomly.eset)$experiment.number))
+"The proportion of 0s varies by about 2% across the batches and there appears to be statistically significant differences, with experiment 7 having the lowest values." 
+
+QUESTION 3.6.3
+d = dist( t(y) )
+mds = cmdscale(d)
+batch = pData( bottomly.eset)$experiment.number - 3
+strain = as.numeric(pData (bottomly.eset)$strain)
+library(rafalib)
+mypar2(1,1)
+plot(mds,col=batch,pch=strain)
+legend("topleft",col=unique(batch),legend=unique(batch)+3,pch=1)
+legend("bottomleft",pch=unique(strain),legend=unique(strain))
+"Batch seems to explain more variability that strain. The first PC splits batch 7 from 3 and 4 into two groups. The second PC splits batches 3 and 4 into two groups (with one sample as an exception) Batch seems to explain more variability that strain. The first PC splits batch 7 from 3 and 4 into two groups. The second PC splits batches 3 and 4 into two groups (with one sample as an exception)"
+
