@@ -361,3 +361,43 @@ resize(g,1)
 Q 2.14.2
 You enter the string in the search box and look at the bottom of the page which tells how many entries are found
 "30"
+
+
+##WEEK 3
+
+
+Q 3.1.1
+The output of a microarray experiment is light intensity, which is recorded as rational valued numbers.
+"More copies of a gene in a sample results in higher light intensity at the corresponding probe"
+
+Q 3.1.2
+Microarrays do not directly measure gene expression or number of RNA molecules, but the light intensity of labeled cDNA hybridizing to probes printed on the array. For this reason, probe-specific effects make it difficult to compare gene expression/RNA abundance across probes for a given sample.
+"the hybridization of RNA or cDNA to probes the hybridization of RNA or cDNA to probes"
+
+Q 3.1.3
+Golub, et al. 1999 (PMID: 10521349) in particular used gene expression microarrays to cluster tumors into classes for acute myeloid leukemia (AML) and acute lymphoblastic leukemia (ALL). Rare variants underlying monogenic disorder and transcription factor binding sites cannot be directly inferred by the output of gene expression microarrays.
+ "classifying tumor samples from various patients into distinct phenotypic classes"
+ 
+ Q 3.2.1
+ The main advance of NGS technology is that we can process many more sequences in parallel. However, to achieve this we are limited (as of 2015) in the size of these sequences.
+ " NGS produces larger volumes of shorter sequenceS"
+ 
+ Q 3.2.2
+ When the signal intensity for a given cluster is about equal for each nucleotide, the base calling algorithms cannot say for certain which nucleotide was incorporated.
+ "the signal intensity for each nucleotide (A,C,G or T) was nearly equal "
+ 
+ Q 3.2.3
+ After aligning the sequencing reads to the genome, we can look for columns of reads where there are nucleotides different than the reference genome. However, for microarray genotyping, the locations of SNPs must already be known, in order to be printed on the array.
+ "we can find new SNPs"
+ 
+ Q 3.2.4
+ All of the first three choices can and do occur in genomics. For examples of each: genomes of cancerous cells involve translocations, which can create regions of the genome which do not occur in the reference genome. There are regions which occur 1000s of times in a genome, called transposons. Many software pipelines discard reads which map to many locations, and then true biology (e.g. a bound protein) which can occur at those regions is ignored. Also, in sequencing RNA or DNA from cancer cells, there can be so many mutations that the aligning programs have difficulty finding the match in the reference genome. Or, this can happen if we align reads from one species to the genome of another species (which does not yet have a reference genome constructed).
+"The region we care about is not in the reference genome"
+"The region we care about occurs 1000s of times in the genome, and we are ignoring reads which align to so many places"
+"For the region we care about, the organism's genome is so different to the reference genome that the aligning program can't find a match"
+ 
+ Q 3.2.5
+ We can generally expect linear scaling with the number of reads which align to a genomic location for sequencing experiments. However, note that the question insisted we sequencing more DNA from the same DNA "library", which is called a "technical replicate". If we perform a new experiment with a new organism/tissue/population of cells, which is called a "biological replicate", we know there is biological variation in the underlying quantity: all organisms/tissues/cells do not have equal level of mRNA.
+"around 3000" 
+ 
+ 
