@@ -400,4 +400,78 @@ Golub, et al. 1999 (PMID: 10521349) in particular used gene expression microarra
  We can generally expect linear scaling with the number of reads which align to a genomic location for sequencing experiments. However, note that the question insisted we sequencing more DNA from the same DNA "library", which is called a "technical replicate". If we perform a new experiment with a new organism/tissue/population of cells, which is called a "biological replicate", we know there is biological variation in the underlying quantity: all organisms/tissues/cells do not have equal level of mRNA.
 "around 3000" 
  
+ Q 3.3.1
+ "ExpressionSet"
  
+ Q 3.3.2
+ geneExpression will be the assayData, sampleInfo will be the phenoData, and expressionAnnotation will be the featureData 
+ 
+ Q 3.3.3
+ pd = AnnotatedDataFrame(sampleInfo)
+rownames(pd) = colnames(geneExpression)
+pd = pd[, colnames(pd)!="filename"] ##redundant
+The reason we use the class AnnotatedDataFrame, as opposed to just using data frames, is to encourage users to describe the variables represented in the table. Learn more here:
+
+?AnnotatedDataFrame
+"2005-06-27"
+
+ Q 3.3.4
+varLabels(pd)[1]
+"ethnicity"
+
+ Q 3.3.5
+fd = AnnotatedDataFrame(geneAnnotation)
+rownames(fd) = geneAnnotation$PROBEID
+fd = fd[,colnames(fd)!="PROBEID"] ##redundant
+pData(fd)["204810_s_at","CHR"]
+[explanation]
+"chr19"
+ 
+ Q 3.3.6
+ pd = AnnotatedDataFrame(sampleInfo)
+rownames(pd) = pd$filename
+
+fd = AnnotatedDataFrame(geneAnnotation)
+rownames(fd) = geneAnnotation$PROBEID
+
+eset = ExpressionSet(assayData=geneExpression,
+              phenoData=pd,
+              featureData=fd)
+Now that you have the data organized in such a way that you can access the different components from the same object:
+
+dim (pData(eset))
+dim( exprs(eset) )
+dim( featureData( eset ))
+We also know (because we created the original datasets) that these measurements were made with the hgfocus array, thus we can add this as well:
+
+annotation(eset) = "hgfocus"
+"0.8049265"
+ 
+ Q 3.3.7
+  eset[1:10,1:5] 
+ 
+ 
+ Q 3.3.8
+tss = start(resize( granges(se),1))
+sum(  tss < 50*10^6 & seqnames( se)=="chr1" )
+
+### we will re-order se
+se = se[order(granges(se)),]
+ind = se$group==1
+de = rowMeans( assay(se)[,ind])-rowMeans( assay(se)[,!ind])
+chrs = unique( seqnames(se))
+library(rafalib)
+mypar2(3,2)
+for(i in c(1:4)){
+  ind = which(seqnames( se) == chrs[i])
+  plot(start(se)[ind], de[ind], ylim=c(-1,1),main=as.character(chrs[i]))
+  abline(h=0)
+  }
+##now X and Y
+for(i in 23:24){
+  ind = which(seqnames( se) == chrs[i])
+  ##note we use different ylims
+  plot(start(se)[ind], de[ind], ylim=c(-5,5),main=as.character(chrs[i]))
+  abline(h=0)
+  }
+  "265"
