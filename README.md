@@ -677,4 +677,44 @@ splot(A1,SD1,ylim=c(0,3),cex=.25)
 splot(A2,SD2,ylim=c(0,3),cex=.25)
  "Method 1 shows larger variability especially for the lower values of A."
  
+ QUESTION 3.8.1
+ EXPLANATION
+The plot depicts looking up the quantile, or propotion of genes with a smaller value, of a gene on a single array (top left to bottom left panel), and matching this quantile with the quantile of a multi-array average of sorted gene expression vectors (bottom left to bottom right panel), then outputting the corresponding value of the multi-array average (bottom right to top right panel). This is the quantile normalization method.
+Quantile normalization produces a set of vectors which have the exact same empirical distribution function.
+If distributions of the gene expression across samples are known to be different, e.g. lots of highly expressed genes in one group and only few in another group, then the assumptions of quantile normalization – that the differences in values of the i-th highest gene of each array are due to technical artifacts – are not met.
+Bigger window sizes corresponds to more smooth curves from averaging the lines from many observations. Very small window sizes leads to the curve fitting around each point, leading to a spikier, jagged curve.
+"Quantile normalization"  "The distributions"  "You expect the distributions to be different"  "Smoother curve"
+
+QUESTION 3.8.2  
+median(sds[spikeinIndex])
+boxplot(sds[-spikeinIndex],sds[spikeinIndex],range=0)
+"0.1990065"  "1.820172"
+
+QUESTION 3.8.3  
+library(preprocessCore)
+npm = normalize.quantiles(pm)
+nsds=rowSds(log2(npm))
+median(nsds[-spikeinIndex])
+boxplot(sds[-spikeinIndex],nsds[-spikeinIndex],range=0,ylim=c(0,0.5))
+"0.1274938"
+
+QUESTION 3.8.4  
+library(preprocessCore)
+npm = normalize.quantiles(pm)
+nsds=rowSds(log2(npm))
+median(nsds[spikeinIndex])
+boxplot(sds[-spikeinIndex],nsds[-spikeinIndex],sds[spikeinIndex],nsds[spikeinIndex],range=0)
+"1.813862"
+
+QUESTION 3.8.5
+mypar2(2,1)
+boxplot(M[erccIndex,],range=0,ylim=c(-2,2))
+abline(h=0,lty=2)
+boxplot(M[-erccIndex,],range=0,ylim=c(-2,2))
+abline(h=0,lty=2)
+ "Quantile normalization has centered the majority of genes. The controls are only a minority so this is the preferred result"
  
+ 
+
+
+
