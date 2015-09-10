@@ -645,3 +645,36 @@ EXPLANATION
 -The raw values reported from a microarray are not directly translatable to due to background noise, sample- and probe-specific effects. In particular, a value of 0 does not correspond to “no expression”, and a value above 0 does not correspond to "expressed".
 -The raw values reported from a microarray are not directly translatable to inference about expression, therefore direct relative comparisons of these raw values across different sets of proves are not meaningful.
 "Poisson with lambda = 1/2"   "u and v"  "Because different probes have different background levels, we cannot say for sure if gene A is expressed or not"  "Because not all probes are as good at detecting real gene expression, we cannot say for sure if gene B has higher expression than gene A" 
+
+QUESTION 3.7.1
+ind=which(pns==colnames(pd)[1]) ##probes in gene 1
+concentration=pd[,1]
+i = which(concentration==0)
+max( pms[ind,i] )
+"468.3"
+
+QUESTION 3.7.2
+ind = which(pns==colnames(pd)[j]) ##probes in gene 1
+y = as.vector(pms[ind,i])
+x = as.vector(mms[ind,i])
+plot(x,y)
+plot(log2(x),log2(y))
+cor(log2(x),log2(y))
+hist(log2(x)-log2(y))
+"0.9305712"
+
+QUESTION 3.7.3
+ind = c(1,15,29)
+pm1 = log2( pm(bg1)[,ind])
+pm2 = log2( pm(bg2)[,ind])
+
+SD1 = rowSds(pm1)
+A1 = rowMeans(pm1)
+SD2 = rowSds(pm2)
+A2 = rowMeans(pm2)
+mypar2(2,1)
+splot(A1,SD1,ylim=c(0,3),cex=.25)
+splot(A2,SD2,ylim=c(0,3),cex=.25)
+ "Method 1 shows larger variability especially for the lower values of A."
+ 
+ 
