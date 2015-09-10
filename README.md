@@ -546,3 +546,37 @@ MA = MA.RG(RG,bc.method="none")
 MA$M[i,j]
 setwd(wd)
 "0.6456647"
+
+QUESTION 3.5A.1  
+bf = BamFile(filename)
+
+gr = GRanges("chr4",IRanges(440000, 470000))
+
+countBam(bf, param=ScanBamParam(which=gr))
+
+# or, alternatively:
+
+reads = scanBam(bf, param=ScanBamParam(what="pos", which=gr))
+
+length(reads[[1]]$pos)
+"1665"
+
+QUESTION 3.5A.2
+bf = BamFile(filename)
+
+gr = GRanges("chr4",IRanges(440000, 470000))
+
+reads = scanBam(bf, param=ScanBamParam(what="seq", which=gr))
+
+mean(letterFrequency(reads[[1]]$seq, "GC", as.prob=TRUE))
+"0.4452773"
+
+QUESTION 3.5A.3
+countOverlaps(g2[ "FBgn0039890" ], ga)
+"1085"
+
+QUESTION 3.5B.1
+
+QUESTION 3.5B.2
+
+QUESTION 3.5B.3
