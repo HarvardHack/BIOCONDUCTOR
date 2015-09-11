@@ -637,7 +637,7 @@ mypar2(1,1)
 plot(mds,col=batch,pch=strain)
 legend("topleft",col=unique(batch),legend=unique(batch)+3,pch=1)
 legend("bottomleft",pch=unique(strain),legend=unique(strain))
-"Batch seems to explain more variability that strain. The first PC splits batch 7 from 3 and 4 into two groups. The second PC splits batches 3 and 4 into two groups (with one sample as an exception) Batch seems to explain more variability that strain. The first PC splits batch 7 from 3 and 4 into two groups. The second PC splits batches 3 and 4 into two groups (with one sample as an exception)"
+"Batch seems to explain more variability that strain. The first PC splits batch 7 from 3 and 4 into two groups. The second PC splits batches 3 and 4 into two groups (with one sample as an exception)" 
 
 QUESTIONS 3.7
 EXPLANATION
