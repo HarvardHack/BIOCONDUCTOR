@@ -651,7 +651,7 @@ ind=which(pns==colnames(pd)[1]) ##probes in gene 1
 concentration=pd[,1]
 i = which(concentration==0)
 max( pms[ind,i] )
-"468.3"
+"26"   "468.3"
 
 QUESTION 3.7.2
 ind = which(pns==colnames(pd)[j]) ##probes in gene 1
