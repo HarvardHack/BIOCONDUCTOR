@@ -757,6 +757,8 @@ peakcov[ which.max(peakcov$score) ]
 start(HepG2[5]) + HepG2[5]$peak
 "64072320"
  
+ ##WEEK 4
+ 
 QUESTION 4.1.1
 library(genefilter)
 tech = rowSds(pool[,g_pool==1])
