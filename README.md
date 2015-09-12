@@ -757,6 +757,88 @@ peakcov[ which.max(peakcov$score) ]
 start(HepG2[5]) + HepG2[5]$peak
 "64072320"
  
+QUESTION 4.1.1
+library(genefilter)
+tech = rowSds(pool[,g_pool==1])
+bio = rowSds(indiv[,g_indiv==1])
+mean(bio>tech)
+## we can also make a plot
+plot(tech,bio)
+abline(0,1,col=2)
+"0.7994725"
 
+QUESTION 4.1.2
+library(genefilter)
+library(qvalue)
+pvals = rowttests(pool,factor(g_pool))$p.value
+qvals = qvalue(pvals)$qvalue
+sum(qvals < 0.05)
+"2169"
 
+QUESTION 4.1.3
+library(genefilter)
+library(qvalue)
+pvals = rowttests(pool,factor(g_pool))$p.value
+qvals = qvalue(pvals)$qvalue
+ind = which(qvals<0.05)
+
+pvals2 = rowttests(indiv,factor(g_indiv))$p.value
+mean(pvals2[ind]>=0.05)
+"0.2784693"
+
+QUESTION 4.1.4
+library(limma)
+X = model.matrix(~g_indiv)
+fit = lmFit(indiv,X)
+eb = ebayes(fit)
+pvals2= eb$p.value[,2]
+qvals2= qvalue(pvals2)$qvalue
+sum( qvals2<0.05 & qvals<0.05)/sum(qvals<0.05)
+"0.989011"
+
+QUESTION 4.2.1
+The term "gene set testing" refers to testing for differential expression for a set of genes, rather than testing only one gene at a time.
+"Testing for differences between population in predefined sets of genes"
+
+QUESTION 4.2.2
+The t-statistics can have any kind of positive, 0, or negative correlation, depending on the nature of the experiment and the genes in the set. Positive correlations can occur for example in the case of batch effects. If the genes in a set are similarly effected by batch, and batch effects are not corrected for, then a high t-statistic for one gene means that a high t-statistic for the other gene is more likely. Positive correlation can also occur, for example if one gene positively regulates the other gene (in terms of gene regulatory networks). Genes within a set can also potentially have a negative correlation if one gene in a set is a negative regulator of another gene in the set. This variation could then lead to a negative correlation between the expression of these two genes, and therefore a negative correlation between the two t-statistics.
+"can have positive, 0, or negative correlation"
+
+QUESTION 4.2.3
+##Using simulation: 
+var(rowMeans(mvrnorm(n=10000,mu=rep(0,10),Sigma=Sigma)))
+##Using the formula from lecture:
+1/10 * (1 + (10-1) * .7)
+"0.73"
+
+Under the null hypothesis, the average of 10 positively-correlated genes will have higher variance than the average of genes with correlation of 0 to each other. So we need to widen the null distribution. If we do not, an average t-statistic will look more surprising (less likely) than it actually is.
+ "we need to widen the null distribution"
+
+QUESTION 4.2.4
+ set.seed(1)
+ idx = grep("GO:0045454", fData(es)$GO_ID)
+ length(idx)
+ r1 = roast(es, idx, design)
+ r1
+ "0.91195598"
+
+QUESTION 4.2.5
+r2[which.max(r2$PropDown),1]
+plot(log2(r2$NGenes),r2$PropUp)
+plot(log2(r2$NGenes),-log10(r2$PValue))
+"13"
+
+QUESTION 4.2.6
+size = sapply(idxsub,length)
+idxsub2= idxsub[size>=50]
+r3 = mroast(es, idxsub2, design)
+rownames(r3[which.max(r3$PropUp),])
+"GO:0000776"
+
+QUESTION 4.2.7
+library(GO.db)
+columns(GO.db)
+keytypes(GO.db)
+select(GO.db, keys="GO:0000776",columns="TERM") 
+"kinetochore"
 
